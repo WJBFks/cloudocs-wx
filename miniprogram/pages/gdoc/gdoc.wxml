@@ -1,0 +1,104 @@
+<!--pages/gdoc/gdoc.wxml-->
+<view style="position: fixed ;bottom: 0;left: 0;right: 0; z-index: 100;">
+  <button class="cu-btn bg-blue lg " style="width: 100%;border-radius: 0;" bindtap="createdoc">
+    <view class="icon-newDoc" style="display: inline;height: 48rpx;width: 48rpx;margin-right: 10rpx;"></view> 新建文档
+  </button>
+</view>
+<view wx:if="{{situation==0||situation==2}}" class="unbind">加载中</view>
+<view wx:if="{{situation==1}}" class="unbind">
+  <view id="buttonView">
+    <view style="margin: 10rpx 0;">请先登录后使用</view>
+    <button class="cu-btn bg-blue" bindtap="toLogin">前往登录</button>
+  </view>
+</view>
+<view wx:if="{{situation==3}}" class="unbind">
+  <!--按钮区域-->
+  <view id="buttonView">
+    <view style="margin: 10rpx 0;">请绑定账号后使用</view>
+    <button class="cu-btn bg-blue lg" bindtap="toBind">前往绑定</button>
+  </view>
+</view>
+<view wx:elif="{{situation==4}}">
+  <view class="scroll-nav" style="margin-bottom: 80rpx;">
+    <view class="nav-item" wx:for="{{docarr}}" wx:key="item" data-id="{{item._id}}" bindtap="bindItem">
+      <!-- 头像 -->
+      <view class="icon-view">
+        <image wx:if="{{item.avatarUrl}}" src="{{item.avatarUrl}}" style="border-radius: 50%;" class="png" mode="widthFix"></image>
+        <view wx:else class="icon-logo size"></view>
+      </view>
+      <!-- 右边显示区 -->
+      <view class="right">
+
+        <!-- 第一行 标题 -->
+        <view class="line title">
+          <view class="mod-text title">{{item.title}}</view>
+          <view class="bg-gray more" data-index="{{index}}" catchtap="showMore">
+            <text class="cuIcon-more"></text>
+          </view>
+        </view>
+
+        <!-- 第二行 创建者 -->
+        <view class="line">
+          <view class="mod-text text-cut" style="align-items: center;">创建者: {{item.creator_name}}</view>
+          <view wx:if="{{item.creator==cdid}}" style="color: #409eff;border-radius: 4rpx;background-color: #ecf5ff;padding: 2rpx 10rpx;" class="mod-text">我的</view>
+          <view wx:else class="mod-text" style="color: #67c23a;border-radius: 4rpx;background-color: #f0f9eb;padding: 2rpx 10rpx;">共享</view>
+        </view>
+
+        <!-- 第三行 创建时间 -->
+        <view class="line">
+          <view class="mod-text text-cut">创建: {{item.created}}</view>
+          <view class="mod-text text-cut">修改: {{item.last}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view class="cu-modal {{moreShow?'show':''}} more" bindtap="hideMore">
+  <view class="cu-dialog" catchtap>
+    <!-- 标题 -->
+    <view class="title">{{docarr[moreIndex].title}}</view>
+    <!-- 重命名 -->
+    <view class="button" bindtap="rename" data-id="{{docarr[moreIndex]._id}}">重命名</view>
+    <!-- 共享文档 -->
+    <view wx:if="{{docarr[moreIndex].creator==cdid}}" class="button" bindtap="share" data-index="{{moreIndex}}">共享文档</view>
+    <!-- 别人的共享 -->
+    <view wx:else class="button text-cut" style="color:#bbb ;">来自{{docarr[moreIndex].creator_name}}的共享文档</view>
+    <!-- 删除文档 -->
+    <view wx:if="{{docarr[moreIndex].creator==cdid}}"  class="button text-red" bindtap="delete" data-id="{{docarr[moreIndex]._id}}">删除文档</view>
+
+    <view wx:else class="button" style="color:#bbb ;">删除文档</view>
+  </view>
+</view>
+
+<view class="cu-modal {{shareShow?'show':''}} share" bindtap="hideShare">
+  <view class="cu-dialog" catchtap>
+    <view class="title">{{docarr[moreIndex].title}}</view>
+
+    <view class="users title">共享用户列表</view>
+
+    <scroll-view scroll-y class="users line">
+      <view wx:if="{{shares.length>0}}" >
+        <view wx:for="{{shares}}" wx:key="item" class="item flex" style="flex: 1;"> 
+        <view style="padding: 0 10rpx;font-size: 28rpx;width: 220rpx;">{{item.name}}</view>
+
+        <view style="padding: 0 10rpx;font-size: 28rpx;margin: 0 10rpx;width: 220rpx;">{{item.tel}}</view>
+
+        <button class="cu-btn " bindtap="shareDel" data-tel="{{item}}">删除</button>
+      </view>
+      </view>
+
+      <view wx:else style="padding: 0 10rpx;font-size: 28rpx;">该文档暂未共享给任何用户!</view>
+
+    </scroll-view>
+
+
+
+    <form bindsubmit="shareAdd">
+      <view style="display: flex;width: 100%;text-align: center;align-items: center;justify-content: center;height: 100rpx;">
+        <input placeholder="请输入用户账号" type="text" name="tel" style="background-color:#f0f0f0;display: block;height: 70rpx;margin: 0 10rpx;border-radius: 4px;" />
+        <button style="height: 70rpx; ;" class="cu-btn" form-type="submit">添加</button>
+      </view>
+    </form>
+  </view>
+</view>

@@ -1,0 +1,34 @@
+{
+    "pages": [
+        "pages/gdoc/gdoc",
+        "pages/mine/home/home",
+        "pages/mine/bind/bind",
+        "pages/editor/editor"
+        
+    ],
+    "window": {
+        "navigationBarBackgroundColor": "#ffffff",
+        "navigationBarTitleText": "云锦文档",
+        "navigationBarTextStyle": "black"
+    },
+    "tabBar": {
+        "color": "#000",
+        "selectedColor": "#0081ff",
+        "backgroundColor": "#FFFFFF",
+        "list": [
+            {
+                "pagePath": "pages/gdoc/gdoc",
+                "text": "文档",
+                "iconPath": "icons/doc.png",
+                "selectedIconPath": "icons/doc_selected.png"
+            },
+            {
+                "pagePath": "pages/mine/home/home",
+                "text": "个人中心",
+                "iconPath": "icons/mine.png",
+                "selectedIconPath": "icons/mine_selected.png"
+            }
+        ]
+    },
+    "sitemapLocation": "sitemap39.json"
+}

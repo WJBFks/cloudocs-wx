@@ -1,0 +1,91 @@
+<block wx:if="{{state=='register'}}">
+  <!--定义form组件-->
+  <!--输入框区块-->
+  <form bindsubmit="register">
+  <!-- 手机号 -->
+  <view class="cu-form-group  margin-top">
+      <view class="title required">手机号码</view>
+      <input type="number" name="phone" placeholder="请输入手机号码"></input>
+      <view class="cu-capsule radius">
+        <view class="cu-tag bg-blue">
+          +86
+        </view>
+        <view class="cu-tag line-blue">
+          中国大陆
+        </view>
+      </view>
+    </view>
+    <!-- 密码 -->
+    <view class="cu-form-group">
+      <view class="title required">密码</view>
+      <input type="password" password name="userPwd" placeholder="6~12位字母数字组合"></input>
+    </view>
+    <!-- 确认密码 -->
+    <view class="cu-form-group">
+      <view class="title required">确认密码</view>
+      <input type="password" password name="userPwd1" placeholder="再次输入确认密码"></input>
+    </view>
+    <!-- 用户名 -->
+    <view class="cu-form-group">
+      <view class="title required" >用户名</view>
+      <input type="text" name="userName" placeholder="请输入用户名"></input>
+    </view>
+    <!-- 邮箱 -->
+    <view class="cu-form-group">
+      <view class="title">邮箱</view>
+      <input type="text" name="email" placeholder="请输入邮箱"></input>
+    </view>
+    <!-- 性别 -->
+
+    <view class="cu-form-group">
+      <view class="title">性别</view>
+      <picker bindchange="bindPickerChange" value="{{value}}" range="{{array}}">
+        <view class="picker">
+          {{(value!=-1)?array[value]:'当前选择'}}
+        </view>
+      </picker>
+    </view>
+
+    <!--按钮区域-->
+    <view id="buttonView">
+      <button form-type="submit" class="bg-blue">注册</button>
+      <view bindtap="toBind">已有账号，去绑定</view>
+    </view>
+
+
+  </form>
+
+</block>
+<!-- 绑定 -->
+<block wx:else>
+  <view wx:if="{{situation != 4}}">
+  <form bindsubmit="bind">
+    <!-- 手机号 -->
+    <view class="cu-form-group margin-top">
+      <view class="title">手机号码</view>
+      <input type="number" name="tel" confirm-type="next" placeholder="请输入手机号码"></input>
+      <view class="cu-capsule radius">
+        <view class="cu-tag bg-blue">
+          +86
+        </view>
+        <view class="cu-tag line-blue">
+          中国大陆
+        </view>
+      </view>
+    </view>
+
+    <!-- 密码 -->
+    <view class="cu-form-group">
+      <view class="title">密码</view>
+      <input type="password" password name="pass" confirm-type="done" placeholder="请输入密码"></input>
+    </view>
+
+
+    <!--按钮区域-->
+    <view id="buttonView">
+      <button class="cu-btn bg-blue lg" form-type="submit">绑定</button>
+      <view bindtap="toRegister">没有账号？去注册</view>
+    </view>
+</form>
+  </view>
+</block>

@@ -1,0 +1,65 @@
+
+<view style="position: absolute;z-index: 2;top: 0;left: 0;right: 0;">
+
+  <!-- 顶部背景 -->
+  <view class="UCenter-bg">
+    <view wx:if="{{userInfo==null}}"style="border-radius: 50%;"  class="icon-logo" mode="widthFix"></view>
+
+    <image wx:else="{{userInfo!=null}}" src="{{userInfo.avatarUrl}}" style="border-radius: 50%;" class="png" mode="widthFix"></image>
+    
+    <view class="text-grey">
+      {{userInfo==null?"Cloudocs":userInfo.nickName}}
+
+    </view>
+    <!-- 按钮 -->
+    <button wx:if="{{situation==1}}" class="cu-btn bg-blue lg " style="width: 690rpx; margin-top: 60rpx;" bindtap="getUserProfile">使用微信登录</button>
+    <button wx:elif="{{situation==3}}" class="cu-btn bg-blue lg " style="width: 690rpx; margin-top: 60rpx;" bindtap="toBind">绑定</button>
+  </view>
+
+
+  <!-- 底部功能条 -->
+  <view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius">
+    
+    <!-- 关于云锦文档 -->
+    <view class="cu-item arrow">
+      <navigator class="content" url="/pages/about/about/about" hover-class="none">
+      <!-- <view class="icon-logo about"></view> -->
+        <image src="/images/logo.png" class="png cuIcon-logo" mode="aspectFit"></image>
+        <text class="text-grey">关于云锦文档</text>
+      </navigator>
+    </view>
+    
+    <!-- GitHub -->
+    <view class="cu-item arrow">
+      <view class="content" bindtap="CopyLink" data-link="https://github.com/gongzhaoxu/CloudocsWX">
+        <text class="cuIcon-github text-grey"></text>
+        <text class="text-grey">GitHub</text>
+      </view>
+    </view>
+    <!-- 意见反馈 -->
+    
+    <view class="cu-item arrow">
+      <button class="cu-btn content" open-type="feedback">
+        <text class="cuIcon-writefill text-cyan"></text>
+        <text class="text-grey">意见反馈</text>
+      </button>
+    </view>
+    <!-- 团队成员介绍 -->
+    <view class="cu-item arrow">
+      <navigator class="content" url="/pages/about/test/list" hover-class="none">
+        <text class="cuIcon-creativefill text-orange"></text>
+        <text class="text-grey">团队成员介绍</text>
+      </navigator>
+    </view>
+
+  </view>
+
+</view>
+
+<!-- 底部波浪 -->
+<view style="position: absolute; bottom: 0;left: 0;right: 0;">
+  <view class="UCenter-bg">
+    <image src="cloud://cloud1-7gpvjj0f0a22157a.636c-cloud1-7gpvjj0f0a22157a-1310352965/wave.gif" mode="scaleToFill" class="gif-wave"></image>
+  </view>
+  <view class="padding  text-center text-grey bg-white shadow-warp"></view>
+</view>

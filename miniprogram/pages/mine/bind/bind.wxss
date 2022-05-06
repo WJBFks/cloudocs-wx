@@ -1,0 +1,43 @@
+/*给页面设置整体背景色*/
+page{
+    background: #f0eff5;
+}
+/*输入框区域样式*/
+#inputView{
+    background:#fff;
+    padding:0 30rpx;
+}
+#inputView > picker{
+    height:88rpx;
+    line-height: 88rpx;
+}
+#inputView > input{
+    height:88rpx;
+    border-bottom: 1rpx solid #f1f1f1;
+}
+/*按钮区域样式*/
+#buttonView{
+    width:690rpx;
+    margin:80rpx auto 0;
+}
+#buttonView > button{
+    width:690rpx;
+    height:88rpx;
+    font-size:36rpx;
+    background:#0081ff;
+    color:#fff;
+}
+#buttonView > view{
+    font-size:28rpx;
+    color:#0081ff;
+    text-align: right;
+    margin-top: 36rpx;
+}
+.required::after{
+    content: "*";
+    color: red;
+}
+.cu-form-group .title {
+    min-width: calc(4em + 30rpx);
+  }
+  
