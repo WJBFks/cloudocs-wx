@@ -1,5 +1,4 @@
 import wj from "../../utils/wj"
-const app = getApp();
 Page({
   data: {
     nav: {
@@ -21,6 +20,7 @@ Page({
     id: "",
     title: "",
     content: "",
+    loading: true,
   },
 
   onLoad: function (options) {
@@ -59,21 +59,33 @@ Page({
   },
   getdoc() {
     wj.request('/docs/' + this.data.id, wj.reqOpt.token).get().then(res => {
+      if (res.statusCode != 200) {
+        throw res
+      }
       this.setData({
         title: res.data.doc.title,
         content: res.data.content,
+        loading: false,
       })
-      console.log("获取文档正在！");
-      console.log(res);
       this.onEditorReady();
     })
   },
   onShow() {
-    //this.getdoc();
-    this.load();
+    try {
+      this.load();
+    } catch (err) {
+      if (err == 'no token') {
+        wx.navigateBack({
+          delta: 0,
+        })
+      }
+    }
   },
   load() {
-
+    let token = wj.token().get()
+    if (token == null) {
+      throw 'no token'
+    }
     const platform = wx.getSystemInfoSync().platform
     const isIOS = platform === 'ios'
     this.setData({
@@ -98,6 +110,7 @@ Page({
     })
   },
   onInput(e) {
+    console.log(e);
     this.setData({
       html: e.detail.html,
     })
@@ -171,22 +184,43 @@ Page({
     })
   },
   insertImage() {
+    let type = [];
+    let path;
     const that = this
     wx.chooseImage({
       count: 1,
-      success: function (res) {
-        that.editorCtx.insertImage({
-          src: res.tempFilePaths[0],
-          data: {
-            id: 'abcd',
-            role: 'god'
-          },
-          width: '80%',
-          success: function () {
-            console.log('insert image success')
-          }
-        })
+    }).then(res => {
+      path = res.tempFilePaths[0]
+      for (let i = path.length - 1; i >= 0; i--) {
+        if (path[i] == '.') {
+          break;
+        }
+        type.splice(0, 0, path[i])
       }
+      type = type.join("")
+      return wx.compressImage({
+        src: path,
+        quality: 80,
+      })
+    }).then(res => {
+      path = res.tempFilePath;
+      that.editorCtx.insertImage({
+        src: "data:image/" + type + ";base64," + wx.getFileSystemManager().readFileSync(path, "base64"),
+        data: {
+          id: 'abcd',
+          role: 'god'
+        },
+        width: '80%',
+        success: function () {
+          console.log('insert image success')
+        }
+      })
+    }).catch(err => {
+      wx.showToast({
+        title: '插入图片失败',
+        icon: "error"
+      })
+      console.error(err);
     })
   },
   inputTitle(e) {

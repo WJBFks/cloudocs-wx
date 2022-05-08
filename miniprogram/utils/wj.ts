@@ -87,6 +87,10 @@ var wj = {
       set(t) {
         token = t;
         wx.setStorageSync('token', t);
+      },
+      del(){
+        token = null;
+        wx.removeStorageSync('token')
       }
     }
   },

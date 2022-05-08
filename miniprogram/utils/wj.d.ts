@@ -59,6 +59,7 @@ declare var wj: {
          * @param t token
          */
         set(t: any): void;
+        del(): void;
     };
     /**
      * request请求，封装wx.request为Promise风格

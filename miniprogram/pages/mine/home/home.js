@@ -97,4 +97,23 @@ Page({
       }
     })
   },
+  BindOut() {
+    wj.token().del('toekn')
+    app.globalData.situation = 3
+    this.setData({
+      situation: app.globalData.situation,
+    })
+    wj.user().addup({
+      cdid: "",
+      tel: "",
+    })
+  },
+  logout() {
+    app.globalData.situation = 1
+    this.setData({
+      situation: app.globalData.situation,
+      userInfo: null
+    })
+
+  },
 })

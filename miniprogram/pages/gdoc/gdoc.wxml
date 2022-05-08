@@ -1,5 +1,5 @@
 <!--pages/gdoc/gdoc.wxml-->
-<view style="position: fixed ;bottom: 0;left: 0;right: 0; z-index: 100;">
+<view wx:if="{{situation==4}}" style="position: fixed ;bottom: 0;left: 0;right: 0; z-index: 100;">
   <button class="cu-btn bg-blue lg " style="width: 100%;border-radius: 0;" bindtap="createdoc">
     <view class="icon-newDoc" style="display: inline;height: 48rpx;width: 48rpx;margin-right: 10rpx;"></view> 新建文档
   </button>
@@ -65,7 +65,7 @@
     <!-- 别人的共享 -->
     <view wx:else class="button text-cut" style="color:#bbb ;">来自{{docarr[moreIndex].creator_name}}的共享文档</view>
     <!-- 删除文档 -->
-    <view wx:if="{{docarr[moreIndex].creator==cdid}}"  class="button text-red" bindtap="delete" data-id="{{docarr[moreIndex]._id}}">删除文档</view>
+    <view wx:if="{{docarr[moreIndex].creator==cdid}}" class="button text-red" bindtap="delete" data-id="{{docarr[moreIndex]._id}}">删除文档</view>
 
     <view wx:else class="button" style="color:#bbb ;">删除文档</view>
   </view>
@@ -78,14 +78,14 @@
     <view class="users title">共享用户列表</view>
 
     <scroll-view scroll-y class="users line">
-      <view wx:if="{{shares.length>0}}" >
-        <view wx:for="{{shares}}" wx:key="item" class="item flex" style="flex: 1;"> 
-        <view style="padding: 0 10rpx;font-size: 28rpx;width: 220rpx;">{{item.name}}</view>
+      <view wx:if="{{shares.length>0}}">
+        <view wx:for="{{shares}}" wx:key="item" class="item flex" style="flex: 1;">
+          <view style="padding: 0 10rpx;font-size: 28rpx;width: 220rpx;">{{item.name}}</view>
 
-        <view style="padding: 0 10rpx;font-size: 28rpx;margin: 0 10rpx;width: 220rpx;">{{item.tel}}</view>
+          <view style="padding: 0 10rpx;font-size: 28rpx;margin: 0 10rpx;width: 220rpx;">{{item.tel}}</view>
 
-        <button class="cu-btn " bindtap="shareDel" data-tel="{{item}}">删除</button>
-      </view>
+          <button class="cu-btn " bindtap="shareDel" data-user="{{item}}">删除</button>
+        </view>
       </view>
 
       <view wx:else style="padding: 0 10rpx;font-size: 28rpx;">该文档暂未共享给任何用户!</view>

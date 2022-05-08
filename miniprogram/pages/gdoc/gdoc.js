@@ -35,7 +35,9 @@ Page({
       return this.load()
     }, err => {
       return this.load()
-    }).catch(err => {})
+    }).catch(err => {
+      console.log(err);
+    })
   },
   onPullDownRefresh() {
     this.load()
@@ -209,7 +211,7 @@ Page({
     })
   },
   shareDel(e) {
-    let tel = e.currentTarget.dataset.tel;
+    let user = e.currentTarget.dataset.user;
     let docarr = this.data.docarr
     let index = this.data.shareIndex
     wx.showModal({
@@ -223,7 +225,7 @@ Page({
           mask: true,
         })
         wj.request('/docs/share/' + docarr[index]._id, wj.reqOpt.token).delete({
-          tel,
+          tel: user.tel,
         }).then(res => {
           console.log(res);
           if (res.statusCode != 200) {
@@ -246,8 +248,8 @@ Page({
       } else {
         throw "取消"
       }
-    }).then(res => {
-      if (res != '取消') {
+    }).catch(err => {
+      if (err != '取消') {
         console.error(err);
         wx.showToast({
           title: '移除失败',
@@ -400,9 +402,8 @@ Page({
       if (openid == undefined) {
         continue;
       }
-      if (avatarUrls[openid] == undefined) {
+      if (avatarUrls[openid] === undefined) {
         await wj.user(openid).get().then(res => {
-          console.log(res);
           avatarUrls[openid] = res.userInfo.avatarUrl
         }, err => {
           avatarUrls[openid] = null

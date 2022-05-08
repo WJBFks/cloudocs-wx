@@ -81,6 +81,13 @@
           "query": "id=627397a391001aaa797e1744",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/editor/editor",
+          "query": "id=6274f31191001ac00446d82c",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

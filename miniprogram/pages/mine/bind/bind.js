@@ -58,7 +58,7 @@ Page({
     }
 
     let gender = parseInt(this.data.value) + 1
-    app.Request("/users", wj.reqOpt.token).POST({
+    wj.request("/users", wj.reqOpt.token).post({
       tel: data.detail.value.phone,
       pass: data.detail.value.userPwd,
       name: data.detail.value.userName,
